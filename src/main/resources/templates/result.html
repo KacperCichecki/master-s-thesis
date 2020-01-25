@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Main</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/flattener.css}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md">
+    <a class="navbar-brand" href="#">Json flattener</a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="main-navigation">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/main}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/alljsons}">All jsons</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">log out</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}">log in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/about}">About</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container features">
+    <div class="row">
+
+        <div th:if="${error == null}" class="alert alert-success">
+            <h2>Json has been formatted</h2>
+        </div>
+
+        <div th:if="${error != null}" class="alert alert-danger">
+            <h2>Error during formatting json happend</h2>
+            <p th:text="${error}">error message</p>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <h3 class="feature-title">Nested result</h3>
+            <p id="nestedJson" th:utext="${#strings.replace( #strings.escapeXml( jsonInput.nested ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></p>
+        </div>
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <h3 class="feature-title">Flattened result</h3>
+            <p th:utext="${#strings.replace( #strings.escapeXml( jsonInput.flatten ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></p>
+        </div>
+    </div>
+</div>
+
+
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <h6 class="text-uppercase font-weight-bold">Additional Information</h6>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat
+                    ante luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat
+                    ante luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis.</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                <p>ul. Słowackiego 33/33 05-120 Legionowo
+                    <br/>kacper-c1@o2.pl
+                    <br/>+ 01 234 567 89</p>
+            </div>
+        </div>
+        <div class="footer-copyright text-center">© 2020 Copyright: JsonFlattener.com</div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/resources/js/flattener.js}"></script>
+
+</body>
+</html>

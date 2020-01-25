@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Error</title>
+    </head>
+    <body>
+
+    <header>
+        <a th:href="@{/main}" class="button" > convert json</a>
+        <a th:href="@{/alljsons}" class="button" >my jsons</a>
+        <a th:href="@{/logout}" class="button" >log out</a>
+        <a th:href="@{/login}" class="button" >log in</a>
+    </header>
+
+        <h1>There was an error</h1>
+
+        <p style="color:darkred">Błąd <span th:text="${error}" /></p>
+    </body>
+</html>
