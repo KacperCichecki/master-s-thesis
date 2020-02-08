@@ -31,8 +31,21 @@ public class ViewControllerTest {
 
     @Test
     public void getHello() throws Exception {
-        ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-        assertThat(response.getBody().equals("Greetings from Spring Boot!"));
+        ResponseEntity<String> response = template
+                .withBasicAuth("user", "password")
+                .getForEntity(base.toString(), String.class);
+
+        assertThat(response.getBody().equals("Anything"));
+    }
+
+    @Test
+    public void getHello2() throws Exception {
+        String response = template
+                .withBasicAuth("user", "password")
+                .getForObject(base.toString(), String.class);
+
+//        assertThat(response.contains("Anything"));
+        assertThat(false);
     }
 
 }
