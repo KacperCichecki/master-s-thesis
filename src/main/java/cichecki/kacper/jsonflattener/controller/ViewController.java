@@ -1,14 +1,28 @@
 package cichecki.kacper.jsonflattener.controller;
 
-
 import cichecki.kacper.jsonflattener.model.JsonInput;
+import cichecki.kacper.jsonflattener.model.UserDto;
 import cichecki.kacper.jsonflattener.service.JsonFlattenerService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.PushBuilder;
+import javax.validation.Valid;
+import java.net.http.HttpRequest;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log
 @Controller
@@ -21,13 +35,19 @@ public class ViewController {
         this.jsonFlattenerService = jsonFlattenerService;
     }
 
-    @GetMapping("/main")
-    public String showForm(Model model) {
+    @GetMapping("main")
+    public String showForm(PushBuilder pushBuilder , Model model) {
+        // todo: PushBuilder jest nullem!
+        // using push function from servlet 4 specification
+        if (null != pushBuilder) {
+            pushBuilder.path("css/flattener.css").push();
+            pushBuilder.path("js/flattener.js").push();
+        }
         model.addAttribute("jsonInput", new JsonInput());
         return "main";
     }
 
-    @PostMapping("/json-input")
+    @PostMapping("json-input")
     public String formatJson(@ModelAttribute JsonInput jsonInput, Model model) {
 
         String flattened = jsonInput.getFlatten().trim();
@@ -38,7 +58,7 @@ public class ViewController {
         String errorInfo = null;
 
         if (flattenedEmpty && nestedEmpty) {
-            return "redirect:main";
+            return "main";
         }
 
         try {
@@ -54,7 +74,6 @@ public class ViewController {
             e.printStackTrace();
         }
 
-
         model.addAttribute("error", errorInfo);
         model.addAttribute("jsonInput", jsonInput);
 
@@ -62,20 +81,14 @@ public class ViewController {
     }
 
 
-    @GetMapping("/login")
-    public String loginPage(Model model) {
-        return "login";
-    }
+    @GetMapping("profile")
+    public String showUsersJsons(HttpServletRequest request, Model model) {
+        Map<String, String> cookieMap = Arrays.stream(request.getCookies())
+                .collect(Collectors.toMap(x -> x.getName(), x -> x.getValue()));
 
-    @GetMapping("/logout")
-    public String logoutPage(Model model) {
-        // todo: implement logout logic
-        return "main";
-    }
+        model.addAttribute("cookies", cookieMap);
 
-    @GetMapping("/alljsons")
-    public String showUsersJsons(Model model) {
-        return "alljsons";
+        return "profile";
     }
 
 }

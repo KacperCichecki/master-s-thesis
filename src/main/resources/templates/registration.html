@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Main</title>
+    <title>Registration</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -43,21 +43,40 @@
 </nav>
 
 <div class="container features">
-    <div class="col-lg-8 col-md-10 col-sm-12">
-        <h3 class="feature-title">put here nested json</h3>
-        <div class="form-group">
-            <textarea class="form-control json-input" name="nested" form="jsonForm"> </textarea>
+    <h1 th:text="#{label.form.title}">form</h1>
+    <form action="/register" th:object="${user}" method="POST" enctype="utf8">
+        <div>
+            <label th:text="#{label.user.firstName}">first</label>
+            <input th:field="*{firstName}"/>
+            <p th:each="error: ${#fields.errors('firstName')}"
+               th:text="${error}">Validation error</p>
         </div>
-        <br>
-        <h3 class="feature-title">put here flatten json</h3>
-        <div class="form-group">
-            <textarea class="form-control json-input" name="flatten" form="jsonForm"> </textarea>
+        <div>
+            <label th:text="#{label.user.lastName}">last</label>
+            <input th:field="*{lastName}"/>
+            <p th:each="error : ${#fields.errors('lastName')}"
+               th:text="${error}">Validation error</p>
         </div>
-        <form action="#" th:action="@{/json-input}" th:object="${jsonInput}" id="jsonForm" method="post">
-            <p><input class="btn btn-outline-secondary btn-lg" type="submit"/>
-                <input class="btn btn-outline-secondary btn-lg" type="reset" value="Reset"/></p>
-        </form>
-    </div>
+        <div>
+            <label th:text="#{label.user.email}">email</label>
+            <input type="email" th:field="*{email}"/>
+            <p th:each="error : ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="#{label.user.password}">password</label>
+            <input type="password" th:field="*{password}"/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="#{label.user.confirmPass}">confirm</label>
+            <input type="password" th:field="*{matchingPassword}"/>
+        </div>
+        <button type="submit" th:text="#{label.form.submit}">submit</button>
+    </form>
+
+    <a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>
 </div>
 <br>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Main</title>
@@ -25,13 +25,16 @@
                 <a class="nav-link" th:href="@{/main}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/alljsons}">All jsons</a>
+                <a class="nav-link" th:href="@{/profile}">All jsons</a>
             </li>
-            <li class="nav-item">
+            <li  sec:authorize="isAuthenticated()" class="nav-item" >
                 <a class="nav-link" th:href="@{/logout}">log out</a>
             </li>
-            <li class="nav-item">
+            <li  sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/login}">log in</a>
+            </li>
+            <li  sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="nav-link" th:href="@{/registration}">register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/about}">About</a>
@@ -46,6 +49,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat ante
             luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis. Suspendisse consectetur mi id
             libero fringilla, in pharetra sem ullamcorper.</p>
+
     </div>
 
 </div>

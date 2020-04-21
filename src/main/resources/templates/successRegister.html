@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/flattener.css}">
+
 </head>
 
 <body>
@@ -42,24 +43,10 @@
     </div>
 </nav>
 
-<div class="container features">
-    <div class="col-lg-8 col-md-10 col-sm-12">
-        <h3 class="feature-title">put here nested json</h3>
-        <div class="form-group">
-            <textarea class="form-control json-input" name="nested" form="jsonForm"> </textarea>
-        </div>
-        <br>
-        <h3 class="feature-title">put here flatten json</h3>
-        <div class="form-group">
-            <textarea class="form-control json-input" name="flatten" form="jsonForm"> </textarea>
-        </div>
-        <form action="#" th:action="@{/json-input}" th:object="${jsonInput}" id="jsonForm" method="post">
-            <p><input class="btn btn-outline-secondary btn-lg" type="submit"/>
-                <input class="btn btn-outline-secondary btn-lg" type="reset" value="Reset"/></p>
-        </form>
-    </div>
+<div class="container">
+    <h1 class="alert alert-success" th:utext="#{message.regSucc}">success</h1>
+    <a th:href="@{/login}" th:utext="#{label.login}">login</a>
 </div>
-<br>
 
 <footer class="page-footer">
     <div class="container">
@@ -88,7 +75,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/flattener.js}"></script>
 
+<script type="text/javascript" th:src="@{/js/flattener.js}"></script>
 </body>
 </html>
