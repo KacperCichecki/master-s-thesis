@@ -1,17 +1,19 @@
 package cichecki.kacper.jsonflattener.controller;
 
-import cichecki.kacper.jsonflattener.model.UserDto;
+import cichecki.kacper.jsonflattener.dto.UserDto;
 import lombok.extern.java.Log;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 @Log
 @RestController
 @RequestMapping("rest")
 @Profile("rest")
 public class MyRestController  {
+
 
     @PostMapping("user")
     ResponseEntity registerUser (@RequestBody UserDto user) {
@@ -28,6 +30,5 @@ public class MyRestController  {
         log.info("Returning user: " + newUser);
         return newUser;
     }
-
 
 }

@@ -1,4 +1,4 @@
-package cichecki.kacper.jsonflattener.model;
+package cichecki.kacper.jsonflattener.dto;
 
 import lombok.Data;
 

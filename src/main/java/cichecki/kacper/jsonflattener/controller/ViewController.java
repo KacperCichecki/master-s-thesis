@@ -1,25 +1,16 @@
 package cichecki.kacper.jsonflattener.controller;
 
-import cichecki.kacper.jsonflattener.model.JsonInput;
-import cichecki.kacper.jsonflattener.model.UserDto;
+import cichecki.kacper.jsonflattener.dto.JsonInput;
 import cichecki.kacper.jsonflattener.service.JsonFlattenerService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.PushBuilder;
-import javax.validation.Valid;
-import java.net.http.HttpRequest;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,7 +27,7 @@ public class ViewController {
     }
 
     @GetMapping("main")
-    public String showForm(PushBuilder pushBuilder , Model model) {
+    public String showForm(PushBuilder pushBuilder, Model model) {
         // todo: PushBuilder jest nullem!
         // using push function from servlet 4 specification
         if (null != pushBuilder) {
@@ -87,7 +78,6 @@ public class ViewController {
                 .collect(Collectors.toMap(x -> x.getName(), x -> x.getValue()));
 
         model.addAttribute("cookies", cookieMap);
-
         return "profile";
     }
 
