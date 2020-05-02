@@ -35,11 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .and()
-            .httpBasic()
-                .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/main");
+                .logoutSuccessUrl("/main")
+                .and()
+            .httpBasic().and()
+            .headers().frameOptions().disable();
     }
 
     @Bean
