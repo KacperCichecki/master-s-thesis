@@ -26,13 +26,13 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/profile}">All jsons</a>
             </li>
-            <li  sec:authorize="isAuthenticated()" class="nav-item">
+            <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/logout}">log out</a>
             </li>
-            <li  sec:authorize="!isAuthenticated()" class="nav-item">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/login}">log in</a>
             </li>
-            <li  sec:authorize="!isAuthenticated()" class="nav-item">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/registration}">register</a>
             </li>
             <li class="nav-item">
@@ -59,13 +59,26 @@
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-12">
             <h3 class="feature-title">Nested result</h3>
-            <p id="nestedJson" th:utext="${#strings.replace( #strings.escapeXml( jsonInput.nested ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></p>
+            <div class="highlight">
+            <code class="highlight" id="nestedJson"
+               th:utext="${#strings.replace( #strings.escapeXml( jsonInput.nested ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></code>
+            </div>
         </div>
         <div class="col-lg-6 col-md-8 col-sm-12">
             <h3 class="feature-title">Flattened result</h3>
-            <p th:utext="${#strings.replace( #strings.escapeXml( jsonInput.flatten ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></p>
+
+            <code class="highlight"
+                  th:utext="${#strings.replace( #strings.escapeXml( jsonInput.flatten ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></p>
+            </code>
         </div>
     </div>
+
+    <div sec:authorize="isAuthenticated()" class="row">
+        <button type="button" onclick="saveJson()">
+            <span>save json</span>
+        </button>
+    </div>
+    <p class="alert alert-warning" sec:authorize="!isAuthenticated()">If you want to save this json, pleas log in first</p>
 </div>
 
 
@@ -97,6 +110,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/flattener.js}"></script>
+<script type="text/javascript" th:src="@{/js/result-page.js}"></script>
 
 </body>
 </html>

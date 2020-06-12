@@ -1,8 +1,10 @@
 package cichecki.kacper.jsonflattener.configuration;
 
+import cichecki.kacper.jsonflattener.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,9 +18,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private MyUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -26,13 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/profile").hasRole("USER")
+                .antMatchers("/profile").hasAnyRole("USER","ADMIN")
                 .antMatchers("/rest/**").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/profile")
                 .permitAll()
                 .and()
             .logout()
@@ -43,7 +49,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .headers().frameOptions().disable();
     }
 
+
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authProvider());
+//        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+    }
+
     @Bean
+    public DaoAuthenticationProvider authProvider() {
+        final CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(encoder());
+        return authProvider;
+    }
+
+/*    @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
@@ -51,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("USER")
                 .build();
         return  new InMemoryUserDetailsManager(user);
-    }
+    }*/
 
     @Bean
     public PasswordEncoder encoder() {

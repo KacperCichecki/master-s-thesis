@@ -46,10 +46,35 @@
 <div class="container features">
     <div class="description">
         <h1>Welcome to the Landing Page!</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat ante
-            luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis. Suspendisse consectetur mi id
-            libero fringilla, in pharetra sem ullamcorper.</p>
+        <p>
+            Aplikacja, umożliwia konwersję danych zapisanych w formacie json.
+            Jej głównym zadaniem będzie zmiana jsona z kluczami zapisanymi w notacji kropkowej w jsona zagnieżdżonego, tak jak poniżej:
+        </p>
+        <p>
+            Format początkowy: </br>
+            {
+            "pole1" : "value",
+            "pole2.podPole1" : "value",
+            "pole2.podPole2" : "value",
+            "pole3.podPole1" : "value",
+            "pole3.podPole2" : "value"
+            }
+        </p>
+        <p>
+            Format po konwersji:</br>
 
+            {
+            "pole1" : "value",
+            "pole2" : {
+            "podPole1" : "value",
+            "podPole2" : "value"
+            },
+            "pole3" : {
+            "podPole1" : "value",
+            "podPole2" : "value"
+            }
+            }
+        </p>
     </div>
 
 </div>

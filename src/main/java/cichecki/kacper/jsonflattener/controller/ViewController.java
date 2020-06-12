@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 
 @Log
 @Controller
+@SessionAttributes("jsonInput")
 public class ViewController {
 
-    private JsonFlattenerService jsonFlattenerService;
+    private final JsonFlattenerService jsonFlattenerService;
 
     @Autowired
     public ViewController(JsonFlattenerService jsonFlattenerService) {
@@ -39,7 +40,7 @@ public class ViewController {
     }
 
     @PostMapping("json-input")
-    public String formatJson(@ModelAttribute JsonInput jsonInput, Model model) {
+    public String formatJson(@ModelAttribute("jsonInput") JsonInput jsonInput, Model model) {
 
         String flattened = jsonInput.getFlatten().trim();
         String nested = jsonInput.getNested().trim();
@@ -74,10 +75,7 @@ public class ViewController {
 
     @GetMapping("profile")
     public String showUsersJsons(HttpServletRequest request, Model model) {
-        Map<String, String> cookieMap = Arrays.stream(request.getCookies())
-                .collect(Collectors.toMap(x -> x.getName(), x -> x.getValue()));
 
-        model.addAttribute("cookies", cookieMap);
         return "profile";
     }
 

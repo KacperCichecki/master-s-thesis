@@ -27,13 +27,13 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/profile}">All jsons</a>
             </li>
-            <li  sec:authorize="isAuthenticated()" class="nav-item" >
+            <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/logout}">log out</a>
             </li>
-            <li  sec:authorize="!isAuthenticated()" class="nav-item">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/login}">log in</a>
             </li>
-            <li  sec:authorize="!isAuthenticated()" class="nav-item">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" th:href="@{/registration}">register</a>
             </li>
             <li class="nav-item">
@@ -45,16 +45,20 @@
 
 <div class="container features">
     <h1>Login page</h1>
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <p th:if="${param.error}"  class="alert alert-danger" role="alert">Wrong user or password</p>
     <form th:action="@{/login}" method="post">
         <label for="username">Username</label>:
-        <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+        <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
         <label for="password">Password</label>:
-        <input type="password" id="password" name="password" /> <br />
-        <input type="submit" value="Log in" />
+        <input type="password" id="password" name="password"/> <br/>
+        <input type="submit" value="Log in"/>
+        <div sec:authorize="!isAuthenticated()" class="nav-item">
+            <label for="button" th:text="#{label.form.registration.button}"> Go to registration form </label>
+            <a id="button" class="btn btn-primary" th:href="@{/registration}">register</a>
+        </div>
     </form>
-
 </div>
+
 
 <footer class="page-footer">
     <div class="container">

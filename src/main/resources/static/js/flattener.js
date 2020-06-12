@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     // create indentation in result
     var elms = document.getElementById("nestedJson");
@@ -8,5 +8,3 @@ $(document).ready(function(){
     }
 
 });
-
-

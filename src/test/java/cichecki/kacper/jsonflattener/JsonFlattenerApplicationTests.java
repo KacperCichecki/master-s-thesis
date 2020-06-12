@@ -22,6 +22,9 @@ class JsonFlattenerApplicationTests {
     @Autowired
     private MockMvc mvc;
 
+    @Autowired
+
+
     @Test
     public void checkUnuthirized() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
@@ -31,6 +34,12 @@ class JsonFlattenerApplicationTests {
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void checkAuthirized() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void checkPasswordEncoding() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

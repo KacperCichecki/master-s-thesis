@@ -78,17 +78,23 @@
                    th:text="${error}">Validation error</p>
             </div>
             <div class="control-group">
-                <label th:text="#{label.user.password}">password</label>
-                <input type="password" th:field="*{password}" required
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$"
-                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
-                <p class="alert alert-warning" th:if="${password_match_err}" th:text="${password_match_err}">Validation error</p>
+                <label class="control-label" for="password" th:text="#{label.user.password}">password</label>
+                <div class="controls">
+                    <input id="password" name="password" class="input-xlarge" type="password" th:field="*{password}" required
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+                </div>
+                <p class="alert alert-warning" th:if="${password_match_err}" th:text="${password_match_err}">Validation
+                    error</p>
             </div>
             <div class="control-group">
-                <label th:text="#{label.user.confirmPass}">confirm</label>
-                <input type="password" th:field="*{matchingPassword}"
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$"/>
-                <p class="alert alert-warning" th:if="${password_match_err}" th:text="${password_match_err}">Validation error</p>
+                <label class="control-label" for="matchingPassword" th:text="#{label.user.confirmPass}">confirm</label>
+                <div class="controls">
+                    <input id="matchingPassword" name="matchingPassword" class="input-xlarge" type="password" th:field="*{matchingPassword}" required
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,30}$"/>
+                </div>
+                <p class="alert alert-warning" th:if="${password_match_err}" th:text="${password_match_err}">
+                    Validation error</p>
             </div>
             <div class="control-group">
                 <div class="controls">
@@ -130,15 +136,15 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/flattener.js}"></script>
 <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>
+<script type="text/javascript" th:src="@{/js/register.js}"></script>
 
 <script th:inline="javascript">
-    var serverContext = [[@{/}]];
 
-        $(document).ready(function () {
+/*        $(document).ready(function () {
 
             $(":password").keyup(function(){
                 if($("#password").val() != $("#matchPassword").val()){
-                    $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+                    $("#globalError").show().html(/!*[[#{PasswordMatches.user}]]*!/);
                 }else{
                     $("#globalError").html("").hide();
                 }
@@ -150,18 +156,18 @@
                     showVerdictsInsideProgressBar:true,
                     showErrors:true,
                     errorMessages:{
-                        wordLength: /*[[#{error.wordLength}]]*/,
-                        wordNotEmail: /*[[#{error.wordNotEmail}]]*/,
-                        wordSequences: /*[[#{error.wordSequences}]]*/,
-                        wordLowercase: /*[[#{error.wordLowercase}]]*/,
-                        wordUppercase: /*[[#{error.wordUppercase}]]*/,
-                        wordOneNumber: /*[[#{error.wordOneNumber}]]*/,
-                        wordOneSpecialChar: /*[[#{error.wordOneSpecialChar}]]*/
+                        wordLength: /!*[[#{error.wordLength}]]*!/,
+                        wordNotEmail: /!*[[#{error.wordNotEmail}]]*!/,
+                        wordSequences: /!*[[#{error.wordSequences}]]*!/,
+                        wordLowercase: /!*[[#{error.wordLowercase}]]*!/,
+                        wordUppercase: /!*[[#{error.wordUppercase}]]*!/,
+                        wordOneNumber: /!*[[#{error.wordOneNumber}]]*!/,
+                        wordOneSpecialChar: /!*[[#{error.wordOneSpecialChar}]]*!/
                     }
                 }
             };
             $('#password').pwstrength(options);
-        });
+        });*/
 
 </script>
 

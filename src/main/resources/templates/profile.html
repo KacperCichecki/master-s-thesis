@@ -44,18 +44,9 @@
 </nav>
 
 <div class="container features">
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-
     <div class="description">
-        <h6 class="text-uppercase font-weight-bold">Cookiess</h6>
-        <p>
-            <tr th:each="cookie : ${cookies}">
-                <td th:text="${cookie.key}">key</td>
-                <td th:text="${cookie.value}">value</td>
-            </tr>
-        </p>
-
-        <h1>Welcome to the All jsons page!</h1>
+        <h1 th:inline="text">Hello [[${#authentication.principal.firstName}]]!</h1>
+        <h1>Welcome  to the All jsons page!</h1>
         <p>Not implemnted yet</p>
     </div>
 
