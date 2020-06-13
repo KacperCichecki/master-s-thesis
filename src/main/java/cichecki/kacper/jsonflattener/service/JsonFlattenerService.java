@@ -1,6 +1,6 @@
 package cichecki.kacper.jsonflattener.service;
 
-import cichecki.kacper.jsonflattener.model.JsonRecord;
+import cichecki.kacper.jsonflattener.persistence.model.JsonRecord;
 import com.github.wnameless.json.flattener.JsonFlattener;
 import com.github.wnameless.json.flattener.PrintMode;
 import com.github.wnameless.json.unflattener.JsonUnflattener;

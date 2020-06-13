@@ -54,8 +54,10 @@
             <textarea class="form-control json-input" name="flatten" form="jsonForm"> </textarea>
         </div>
         <form action="#" th:action="@{/json-input}" th:object="${jsonInput}" id="jsonForm" method="post">
-            <p><input class="btn btn-outline-secondary btn-lg" type="submit"/>
-                <input class="btn btn-outline-secondary btn-lg" type="reset" value="Reset"/></p>
+            <p>
+                <input class="btn btn-outline-secondary btn-lg" type="submit"/>
+                <input class="btn btn-outline-secondary btn-lg" type="reset" value="Reset"/>
+            </p>
         </form>
     </div>
 </div>

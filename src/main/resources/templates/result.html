@@ -45,7 +45,7 @@
 <div class="container features">
     <div class="row">
 
-        <div th:if="${error == null}" class="alert alert-success">
+        <div th:if="${error == null}" class="alert alert-success fade in" id="alertToHide">
             <h2>Json has been formatted</h2>
         </div>
 
@@ -73,12 +73,16 @@
         </div>
     </div>
 
-    <div sec:authorize="isAuthenticated()" class="row">
-        <button type="button" onclick="saveJson()">
-            <span>save json</span>
-        </button>
+    <div th:if="${error == null}">
+        <div sec:authorize="isAuthenticated()" class="row">
+            <button id="saveResultButton" type="button" onclick="saveJson()">
+                <span>save json</span>
+            </button>
+        </div>
     </div>
+
     <p class="alert alert-warning" sec:authorize="!isAuthenticated()">If you want to save this json, pleas log in first</p>
+    <p id="result"></p>
 </div>
 
 

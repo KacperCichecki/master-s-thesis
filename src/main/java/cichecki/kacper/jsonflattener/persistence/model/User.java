@@ -1,6 +1,7 @@
 package cichecki.kacper.jsonflattener.persistence.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +29,11 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<JsonRecord> jsonRecords;
 
     public Long getId() {
         return id;
@@ -75,6 +81,14 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<JsonRecord> getJsonRecords() {
+        return jsonRecords;
+    }
+
+    public void setJsonRecords(List<JsonRecord> jsonRecords) {
+        this.jsonRecords = jsonRecords;
     }
 
     @Override

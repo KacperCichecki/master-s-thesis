@@ -26,15 +26,15 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     // nadpisałem po podstawowa konfiguracja nie zawiera cacheu
-    @Override
+/*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
-                .setCachePeriod(3600)
+                .setCachePeriod(3600) // todo: dla testów wyłaczyłem cachowanie
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());;
-    }
+    }*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

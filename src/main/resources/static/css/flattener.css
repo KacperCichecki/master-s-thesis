@@ -148,3 +148,14 @@ textarea.json-input {
 
 }
 
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity 0.65s linear;
+    -moz-transition: opacity 0.65s linear;
+    -o-transition: opacity 0.65s linear;
+    transition: opacity 0.65s linear;
+}
+.fade.in {
+    opacity: 1;
+}
