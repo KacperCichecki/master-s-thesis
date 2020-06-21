@@ -11,10 +11,10 @@ public class JsonRecord {
 
     @Id
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String flattendeJson;
+    private String flattenedJson;
 
     private String nestedJson;
 
@@ -30,7 +30,7 @@ public class JsonRecord {
     }
 
     public JsonRecord(JsonInput jsonInput) {
-        this.flattendeJson = jsonInput.getFlatten();
+        this.flattenedJson = jsonInput.getFlatten();
         this.nestedJson = jsonInput.getNested();
         this.creationTime = new Date();
     }
@@ -43,12 +43,12 @@ public class JsonRecord {
         this.id = id;
     }
 
-    public String getFlattendeJson() {
-        return flattendeJson;
+    public String getFlattenedJson() {
+        return flattenedJson;
     }
 
-    public void setFlattendeJson(String flattendeJson) {
-        this.flattendeJson = flattendeJson;
+    public void setFlattenedJson(String flattenedJson) {
+        this.flattenedJson = flattenedJson;
     }
 
     public String getNestedJson() {
@@ -82,7 +82,5 @@ public class JsonRecord {
     public void setUser(User user) {
         this.user = user;
     }
-
-
 
 }

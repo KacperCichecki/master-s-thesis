@@ -85,7 +85,6 @@ public class ViewController {
 
     @GetMapping("save-json")
     public ResponseEntity saveJson(@ModelAttribute("jsonInput") JsonInput jsonInput) {
-        log.info("saving json: " + jsonInput);
 
         try {
             jsonPersistenceService.saveResult(jsonInput);
@@ -97,6 +96,19 @@ public class ViewController {
         return new ResponseEntity<>("Json has been saved sucessfully", HttpStatus.CREATED);
     }
 
+    @PutMapping("delete-json")
+    public ResponseEntity deleteJson(Integer jsonId) {
+
+        try {
+            jsonPersistenceService.dleteJson(jsonId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Json has been deleted sucessfully", HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("json-input")
     public String showResultPage() {
         return "result";
@@ -104,7 +116,9 @@ public class ViewController {
 
 
     @GetMapping("profile")
-    public String showUsersJsons(HttpServletRequest request, Model model) {
+    public String showUsersJsons(Model model) {
+
+        model.addAttribute("jsonRecords", jsonPersistenceService.getJsonRecords());
 
         return "profile";
     }

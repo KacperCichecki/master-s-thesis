@@ -23,10 +23,4 @@ public class JsonFlattenerService {
         return nestedJson;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<JsonRecord> getAllJsons() {
-        // todo:retreive all json from db
-        return Arrays.asList(new JsonRecord());
-    }
-
 }

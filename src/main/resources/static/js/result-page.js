@@ -11,7 +11,7 @@ function saveJson() {
         if (xhr.readyState === 4){
 
             let result = $('#result');
-            if (xhr.status === 200) {
+            if (xhr.status === 201) {
                 result.addClass("alert alert-success fade in");
                 document.getElementById('result')
             } else {
@@ -27,5 +27,4 @@ function saveJson() {
     };
     xhr.open('GET', 'save-json');
     xhr.send()
-
 }
