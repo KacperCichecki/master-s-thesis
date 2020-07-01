@@ -1,19 +1,25 @@
 package cichecki.kacper.jsonflattener;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.net.URL;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import cichecki.kacper.jsonflattener.controller.ViewController;
+import cichecki.kacper.jsonflattener.service.MyUserDetailsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.LocalServerPort;
+
+import org.junit.jupiter.api.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 
+
+// w ten sposób podnosimy całą aplikację wraz z serverem co jest kosztowną operacja
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ViewControllerTest {
 
     @LocalServerPort
@@ -24,18 +30,72 @@ public class ViewControllerTest {
     @Autowired
     private TestRestTemplate template;
 
+    @Autowired
+    private ViewController controller;
+
+    @Autowired
+    private MyUserDetailsService userDetailsService;
+
     @BeforeEach
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:" + port + "/");
+        this.base = new URL("http://localhost:" + port);
     }
 
     @Test
-    public void getHello() throws Exception {
+    @Order(1)
+    public void contexLoads() {
+        assertThat(controller).isNotNull();
+    }
+
+
+    @Test
+    @Order(2)
+    public void getMainPageWhenNotLoggedIn() {
         ResponseEntity<String> response = template
-                .withBasicAuth("user", "password")
                 .getForEntity(base.toString(), String.class);
 
-        assertThat(response.getBody().equals("Anything"));
+        String responseString = response.getBody();
+        assertThat(responseString).isNotNull();
+        Assert.isTrue(responseString.contains("put here flatten json"), "response should contains proper string");
+    }
+
+    @Test
+    @Order(3)
+    public void getProfiePageWhenLoggedIn() {
+        ResponseEntity<String> response = template
+                .withBasicAuth("test@test.com", "test")
+                .getForEntity(base.toString() + "/profile", String.class);
+
+        String responseString = response.getBody();
+        assertThat(responseString).isNotNull();
+        Assert.isTrue(responseString.contains("table table-dark"), "response should contains proper string");
+    }
+
+    @Test
+    @Order(4)
+    public void dontAllowNotLoggedInUserProfilePage() {
+        ResponseEntity<String> response = template
+                .withBasicAuth("test@test.com", "wrognPassword")
+                .getForEntity(base.toString() + "/profile", String.class);
+
+        String responseString = response.getBody();
+        assertThat(responseString).isNotNull();
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    @Order(5)
+    public void loadUserByUsernameAndCheckAuthority() {
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername("test@test.com");
+        assertThat(userDetails).isNotNull();
+        for (GrantedAuthority authority : userDetails.getAuthorities()) {
+            if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                Assert.isTrue(true);
+                return;
+            }
+        }
+        Assert.isTrue(false, "user doesn't have proper role");
     }
 
 }
