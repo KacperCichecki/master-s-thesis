@@ -21,15 +21,21 @@ public class JsonPersistenceService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JsonRecordRepository jsonRecordRepository;
+
     public void saveResult(JsonInput jsonInput) {
 
         JsonRecord jsonRecord = new JsonRecord(jsonInput);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         user = userRepository.findByEmail(user.getEmail());
-        user.getJsonRecords().add(jsonRecord);
+        jsonRecord.setUser(user);
 
-        userRepository.save(user);
+        jsonRecordRepository.save(jsonRecord);
+/*
+        user = userRepository.save(user);
+        log.info(String.valueOf(user));*/
     }
 
     public void dleteJson(Integer jsonId) {

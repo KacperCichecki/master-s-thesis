@@ -1,5 +1,7 @@
 package cichecki.kacper.jsonflattener.configuration;
 
+import cichecki.kacper.jsonflattener.filters.RequestResponseLoggingFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
     }
 
-    // nadpisałem po podstawowa konfiguracja nie zawiera cacheu
+    // nadpisałem bo podstawowa konfiguracja nie zawiera cacheu
 /*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
@@ -61,7 +63,19 @@ public class WebConfig implements WebMvcConfigurer {
 
         messageSource.setBasename("classpath:messages");
         messageSource.setDefaultEncoding("UTF-8");
+
         return messageSource;
+    }
+
+    @Bean
+    public FilterRegistrationBean<RequestResponseLoggingFilter> loggingFilter(){
+        FilterRegistrationBean<RequestResponseLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+
+        registrationBean.setFilter(new RequestResponseLoggingFilter());
+        registrationBean.addUrlPatterns("/save-json");
+        registrationBean.addUrlPatterns("/about");
+
+        return registrationBean;
     }
 
 }

@@ -1,6 +1,8 @@
 package cichecki.kacper.jsonflattener.controller;
 
 import cichecki.kacper.jsonflattener.dto.JsonInput;
+import cichecki.kacper.jsonflattener.errors.CustomeErrorException;
+import cichecki.kacper.jsonflattener.errors.NotImplementedException;
 import cichecki.kacper.jsonflattener.service.JsonFlattenerService;
 import cichecki.kacper.jsonflattener.service.JsonPersistenceService;
 import lombok.extern.java.Log;
@@ -93,7 +95,7 @@ public class ViewController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>("Json has been saved sucessfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Json has been saved successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("delete-json")
@@ -123,4 +125,21 @@ public class ViewController {
         return "profile";
     }
 
+    @GetMapping("501")
+    public void throwHttp501Error(Model model) {
+        throw new NotImplementedException();
+    }
+
+    @GetMapping("418")
+    public void throwHttp404Error(Model model) {
+        throw new CustomeErrorException();
+    }
+
+    @GetMapping("nullpointer")
+    public void throwHttp500Error(Model model) {
+
+        String randomString = null;
+        randomString.length();
+
+    }
 }
