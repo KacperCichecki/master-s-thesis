@@ -18,6 +18,18 @@
     <h2>Our Engineers are working on it</h2>
     <a href="/">Go Home</a>
 
+    <p th:if="${url}">
+        <b>Page:</b> <span th:text="${url}">Page URL</span>
+    </p>
+    <div th:if="${exception}">
+        <b>Cause:</b>
+        <span th:if="${exception}" th:text="${exception}">exception ...</span>
+        <blockquote>
+            <i>Note: You would never generate a page that displays a Java
+                exception to an end-user in a real application</i>
+        </blockquote>
+    </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

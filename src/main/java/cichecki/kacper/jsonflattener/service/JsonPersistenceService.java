@@ -24,12 +24,11 @@ public class JsonPersistenceService {
     @Autowired
     private JsonRecordRepository jsonRecordRepository;
 
-    public void saveResult(JsonInput jsonInput) {
+    public void saveResult(JsonInput jsonInput, User activeUser) {
 
         JsonRecord jsonRecord = new JsonRecord(jsonInput);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        user = userRepository.findByEmail(user.getEmail());
+        User user = userRepository.findByEmail(activeUser.getEmail());
         jsonRecord.setUser(user);
 
         jsonRecordRepository.save(jsonRecord);
@@ -38,16 +37,14 @@ public class JsonPersistenceService {
         log.info(String.valueOf(user));*/
     }
 
-    public void dleteJson(Integer jsonId) {
-
-        log.info("deleting json record");
+    public void dleteJson(Long jsonId) {
+        log.info("deleting json record with Id: " + jsonId);
+        jsonRecordRepository.deleteById(jsonId);
     }
 
-    public List<JsonRecord> getJsonRecords() {
+    public List<JsonRecord> getJsonRecords(User activeUser) {
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        user = userRepository.findByEmail(user.getEmail());
+        User user  = userRepository.findByEmail(activeUser.getEmail());
         return user.getJsonRecords();
     }
 

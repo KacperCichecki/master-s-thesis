@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,17 +77,23 @@ public class RegisterController {
         return new ModelAndView("successRegister", "newUser", registered);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Data integrity violation")
-    public String validationErro(MethodArgumentNotValidException exception) {
-        log.info(exception.getMessage());
-
+    // only for testin purpose
+    @GetMapping("register-error")
+    public String throwRegistrationError() {
+        UserDto userDto = null;
+        userDto.getEmail();
         return "registration";
     }
 
-    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Data integrity violation")
-    public ModelAndView validationErro(Exception exception) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Data integrity violation")
+    public String validationError(MethodArgumentNotValidException exception) {
+        log.warn(exception.getMessage());
+        return "registration";
+    }
+
+/*    @ExceptionHandler(Exception.class)
+    public ModelAndView validationError(Exception exception) {
         log.info(exception.getMessage());
 
         UserDto userDto = new UserDto();
@@ -95,6 +102,6 @@ public class RegisterController {
         modelAndView.addObject("message", exception.getMessage());
         modelAndView.addObject("user", userDto);
         return modelAndView;
-    }
+    }*/
 
 }

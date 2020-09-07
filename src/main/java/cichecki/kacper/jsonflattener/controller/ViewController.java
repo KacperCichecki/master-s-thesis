@@ -1,25 +1,22 @@
 package cichecki.kacper.jsonflattener.controller;
 
 import cichecki.kacper.jsonflattener.dto.JsonInput;
-import cichecki.kacper.jsonflattener.errors.CustomeErrorException;
+import cichecki.kacper.jsonflattener.errors.CustomErrorException;
 import cichecki.kacper.jsonflattener.errors.NotImplementedException;
+import cichecki.kacper.jsonflattener.persistence.model.User;
 import cichecki.kacper.jsonflattener.service.JsonFlattenerService;
 import cichecki.kacper.jsonflattener.service.JsonPersistenceService;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.PushBuilder;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -85,11 +82,12 @@ public class ViewController {
         return "result";
     }
 
+
     @GetMapping("save-json")
-    public ResponseEntity saveJson(@ModelAttribute("jsonInput") JsonInput jsonInput) {
+    public ResponseEntity saveJson(@ModelAttribute("jsonInput") JsonInput jsonInput, @AuthenticationPrincipal User activeUser) {
 
         try {
-            jsonPersistenceService.saveResult(jsonInput);
+            jsonPersistenceService.saveResult(jsonInput, activeUser);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -98,8 +96,8 @@ public class ViewController {
         return new ResponseEntity<>("Json has been saved successfully", HttpStatus.CREATED);
     }
 
-    @PutMapping("delete-json")
-    public ResponseEntity deleteJson(Integer jsonId) {
+    @DeleteMapping("delete-json")
+    public ResponseEntity deleteJson(Long jsonId) {
 
         try {
             jsonPersistenceService.dleteJson(jsonId);
@@ -118,9 +116,9 @@ public class ViewController {
 
 
     @GetMapping("profile")
-    public String showUsersJsons(Model model) {
+    public String showUsersJsons(Model model, @AuthenticationPrincipal User activeUser) {
 
-        model.addAttribute("jsonRecords", jsonPersistenceService.getJsonRecords());
+        model.addAttribute("jsonRecords", jsonPersistenceService.getJsonRecords(activeUser));
 
         return "profile";
     }
@@ -132,7 +130,7 @@ public class ViewController {
 
     @GetMapping("418")
     public void throwHttp404Error(Model model) {
-        throw new CustomeErrorException();
+        throw new CustomErrorException();
     }
 
     @GetMapping("nullpointer")

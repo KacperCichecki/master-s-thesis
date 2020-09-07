@@ -7,6 +7,6 @@ function deleteRow(r) {
 
 function deleJson(jsonId) {
     let xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'delete-json?jsonId=' + jsonId);
+    xhr.open('DELETE', 'delete-json?jsonId=' + jsonId);
     xhr.send()
 }
