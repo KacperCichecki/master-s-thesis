@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/main")
                 .and()
             .httpBasic().and()
-            .headers().frameOptions().disable();
+            .headers().frameOptions().disable()
+            .and().headers().httpStrictTransportSecurity().disable();
     }
 
 

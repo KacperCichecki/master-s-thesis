@@ -39,8 +39,8 @@ public class ViewController {
 
     @GetMapping("main")
     public String showForm(PushBuilder pushBuilder) {
-        // todo: PushBuilder jest nullem!
-        // using push function from servlet 4 specification
+
+        // using push function from servlet 4 specification; HTTP/2
         if (pushBuilder != null) {
             pushBuilder.path("css/flattener.css").push();
             pushBuilder.path("js/flattener.js").push();
