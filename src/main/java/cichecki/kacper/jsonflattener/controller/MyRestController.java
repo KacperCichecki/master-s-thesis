@@ -33,7 +33,7 @@ public class MyRestController  {
 
     @PostMapping("json-input")
     public JsonInput formatJson(@RequestBody JsonInput jsonInput) {
-
+        log.debug("JsonInput: " + jsonInput.toString());
         if (!validateInput(jsonInput))
             throw new WrongFormatException("json has empty fileds");
 
