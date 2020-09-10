@@ -32,7 +32,5 @@ build/
 
 
 /.mvn/wrapper/maven-wrapper.jar
-/mvnw.cmd
 /.mvn/wrapper/maven-wrapper.properties
 /.mvn/wrapper/MavenWrapperDownloader.java
-/mvnw
