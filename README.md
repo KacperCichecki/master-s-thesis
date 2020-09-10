@@ -2,7 +2,7 @@
 This is project where I compare process of creating web appliaction with Spring Boot and Spring Framework projects
 
 Na wstępie upewnij się, że:
-- masz zainstalowaną javę w wersji minimum 11 (https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- masz zainstalowaną javę w wersji minimum 11 (https://www.techspot.com/downloads/downloadnow/5553/?evp=cc1002b8f24231deaf82043061a06561&file=1&fbclid=IwAR1IUeql6lu0NdsOFQLjh05mwZ1JjX-80KQPfWxWqQ6V5y6qMFkpi9Kwo6I)
 - ustawioną zmienną JAVA_HOME (https://docs.opsgenie.com/docs/setting-java_home)
 - javę dodaną do PATHa (https://www.java.com/en/download/help/path.xml)
 
