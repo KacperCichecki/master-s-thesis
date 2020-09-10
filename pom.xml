@@ -145,6 +145,7 @@
                         <profile>main</profile>
                     </profiles>
                     <addResources>true</addResources>
+                    <executable>true</executable>
                 </configuration>
             </plugin>
             <plugin>
