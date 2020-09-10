@@ -16,23 +16,23 @@
     <name>json-flattener</name>
     <description>spring boot version of json-flattener application</description>
 
-<!--    <profiles>
+    <profiles>
         <profile>
             <id>main</id>
+            <properties>
+                <spring.profiles.active>main,rest</spring.profiles.active>
+            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
         </profile>
         <profile>
             <id>test</id>
             <properties>
-                <active.profile>test</active.profile>
+                <spring.profiles.active>test</spring.profiles.active>
             </properties>
         </profile>
-    </profiles>-->
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -142,7 +142,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <profiles>
-                        <profile>main</profile>
+                        <profile>test,rest</profile>
                     </profiles>
                     <addResources>true</addResources>
                     <executable>true</executable>
@@ -157,6 +157,12 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <repositories>
