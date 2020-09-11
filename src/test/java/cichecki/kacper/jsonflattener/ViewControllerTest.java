@@ -14,11 +14,13 @@ import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
 
 // w ten sposób podnosimy całą aplikację wraz z serverem co jest kosztowną operacja
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("deploy")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ViewControllerTest {
 

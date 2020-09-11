@@ -18,19 +18,19 @@
 
     <profiles>
         <profile>
-            <id>main</id>
+            <id>local</id>
             <properties>
-                <spring.profiles.active>main,rest</spring.profiles.active>
+                <spring.profiles.active>local,rest</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>deploy</id>
+            <properties>
+                <spring.profiles.active>deploy</spring.profiles.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <spring.profiles.active>test</spring.profiles.active>
-            </properties>
         </profile>
     </profiles>
 
@@ -142,7 +142,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <profiles>
-                        <profile>test,rest</profile>
+                        <profile>deploy,rest</profile>
                     </profiles>
                     <addResources>true</addResources>
                     <executable>true</executable>

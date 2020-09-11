@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = "bar2=test")
 @AutoConfigureMockMvc
-@ActiveProfiles("main")
+@ActiveProfiles("deploy")
 class SpringBootProfileTest {
 
     @Value("${foo}")
@@ -23,7 +23,7 @@ class SpringBootProfileTest {
 
     @Test
     void test1(){
-        assertThat(foo).isEqualTo("main");
+        assertThat(foo).isEqualTo("deploy");
     }
 
     @Test
