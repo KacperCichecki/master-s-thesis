@@ -1,6 +1,8 @@
 package cichecki.kacper.jsonflattener.configuration;
 
-import cichecki.kacper.jsonflattener.filters.RequestResponseLoggingFilter;
+import cichecki.kacper.jsonflattener.mvc.MyHandlerInterceptorAdapter;
+import cichecki.kacper.jsonflattener.mvc.RequestResponseLoggingFilter;
+import cichecki.kacper.jsonflattener.persistence.listeners.MyModifiedObjectTracker;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -29,19 +31,20 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     // nadpisałem bo podstawowa konfiguracja nie zawiera cacheu
-/*    @Override
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
-                .setCachePeriod(3600) // todo: dla testów wyłaczyłem cachowanie
+                .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());;
-    }*/
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(myHandlerInterceptorAdapter()).addPathPatterns("/profile/**");
     }
 
     @Bean
@@ -50,6 +53,17 @@ public class WebConfig implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
+
+    @Bean
+    public MyHandlerInterceptorAdapter myHandlerInterceptorAdapter() {
+        return new MyHandlerInterceptorAdapter(myModifiedObjectTracker());
+    }
+
+    @Bean
+    public MyModifiedObjectTracker myModifiedObjectTracker() {
+        return new MyModifiedObjectTracker();
+    }
+
 
     @Bean
     public LocaleResolver localeResolver() {
@@ -66,6 +80,11 @@ public class WebConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
+    }
+
+    @Bean
+    public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+        return new ShallowEtagHeaderFilter();
     }
 
     @Bean

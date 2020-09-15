@@ -45,9 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/main")
                 .and()
-            .httpBasic().and()
-            .headers().frameOptions().disable()
-            .and().headers().httpStrictTransportSecurity().disable();
+            .headers()
+                .frameOptions().disable()
+                .cacheControl().disable()
+                .httpStrictTransportSecurity().disable();
     }
 
 

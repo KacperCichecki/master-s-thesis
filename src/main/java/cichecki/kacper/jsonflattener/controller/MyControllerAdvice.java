@@ -3,6 +3,7 @@ package cichecki.kacper.jsonflattener.controller;
 
 import cichecki.kacper.jsonflattener.errors.ErrorInfo;
 import cichecki.kacper.jsonflattener.errors.WrongFormatException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @ControllerAdvice
 public class MyControllerAdvice {
 
@@ -21,6 +23,8 @@ public class MyControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+
+        log.error(e.getMessage());
 
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
             throw e;

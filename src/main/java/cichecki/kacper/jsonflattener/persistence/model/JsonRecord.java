@@ -1,6 +1,7 @@
 package cichecki.kacper.jsonflattener.persistence.model;
 
 import cichecki.kacper.jsonflattener.dto.JsonInput;
+import cichecki.kacper.jsonflattener.persistence.listeners.DaoListener;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
+@EntityListeners(DaoListener.class)
 @Table(name = "json_record")
 public class JsonRecord {
 

@@ -100,6 +100,7 @@ public class MyRestController  {
     @ExceptionHandler(Exception.class)
     @ResponseBody ErrorInfo
     handleGenericException(HttpServletRequest req, Exception ex) {
+        log.error(ex.getMessage() + ex.getClass());
         return new ErrorInfo(req.getRequestURL().toString(), ex);
     }
 

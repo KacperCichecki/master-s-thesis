@@ -8,6 +8,8 @@ import cichecki.kacper.jsonflattener.service.JsonFlattenerService;
 import cichecki.kacper.jsonflattener.service.JsonPersistenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.PushBuilder;
+import java.net.http.HttpResponse;
 
 @Slf4j
 @Controller
@@ -38,7 +42,9 @@ public class ViewController {
     }
 
     @GetMapping("main")
-    public String showForm(PushBuilder pushBuilder) {
+    public String showForm(PushBuilder pushBuilder, HttpServletResponse response) {
+
+        response.addHeader(HttpHeaders.CACHE_CONTROL, "");
 
         // using push function from servlet 4 specification; HTTP/2
         if (pushBuilder != null) {
@@ -116,8 +122,9 @@ public class ViewController {
 
 
     @GetMapping("profile")
-    public String showUsersJsons(Model model, @AuthenticationPrincipal User activeUser) {
+    public String showUsersJsons(Model model, @AuthenticationPrincipal User activeUser, HttpServletResponse response) {
 
+        response.addHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
         model.addAttribute("jsonRecords", jsonPersistenceService.getJsonRecords(activeUser));
 
         return "profile";
