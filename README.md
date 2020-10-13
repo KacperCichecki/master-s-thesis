@@ -10,9 +10,12 @@ Instrukcja:
 1. Pobrać kod aplikacji (zielony przycisk "Code" a później "Download ZIP")
 2. Wypakować i przejść do folderu
 3. W tym folderze odpalić konsolę (lub przejść w konsoli do tego folderu)
-4. Wpisać w konsoli komendę: 
+4.a. Wpisać w konsoli komendę: 
     ./mvnw spring-boot:run (linux)
     ./mvnw.cmd spring-boot:run (windows)  
+4.b. Zbudować obraz dockerowy, a następnie go urchumomić używając poniższych komend:
+    docker build -t json-flattener:1.0.0 . 
+    docker run -e "SPRING_PROFILES_ACTIVE=deploy" -p 7777:7777 json-flattener:1.0.0
 5. Wpisać w przeglądarce dany adres: http://localhost:7777/main
 
 Funkcjonalności:
